@@ -6,26 +6,44 @@ class Solution
 public:
     string reverseVowels(string s)
     {
-        string ans;
-        int cnt=0;
-
-        for (int i=0;i<s.size();i++)
+        string vowels = "AEIOUaeiou";
+        int l = 0;
+        int r = s.size() - 1;
+        bool f1,f2;
+        while (l < r)
         {
-            int x=s[i];
-            if (x == 'a' || x == 'e' || x == 'i' || x == 'o' || x == 'u' || x == 'A' || x == 'E' || x == 'I' || x == 'O' || x == 'U')
-                cnt++;
-        }
+            f1=false;
+            f2=false;
 
-        
-        for (int j=1;j<=cnt/2;j++)
-        {
-            if (x == 'a' || x == 'e' || x == 'i' || x == 'o' || x == 'u' || x == 'A' || x == 'E' || x == 'I' || x == 'O' || x == 'U')
+            for (char x : vowels)
             {
-                
+                if (x == s[l])
+                    f1 = true;
             }
-            else
-                ans += x;
+            if(!f1)
+            {
+                l++;
+            }
+            for (char x : vowels)
+            {
+                if (x==s[r])
+                    f2 = true;
+            }
+            if(!f2)
+            {
+                r--;
+            }
+            if(f1 && f2)
+            {
+                char temp = s[l];
+                s[l]=s[r];
+                s[r]=temp;
+                l++;
+                r--;
+            }
+          
         }
+
         return s;
     }
 };
