@@ -33,7 +33,7 @@ public:
 
 int main()
 {
-    vector<int> height = {1,8,6,2,5,4,8,3,7};
+    vector<int> height = {3,2,1,4};
     Solution obj;
     cout << obj.maxArea(height)<<endl;
 
