@@ -20,7 +20,6 @@ public:
         {
             mp2[word2[i]]++;
         }
-        int occur1 = 0, occur2 = 0;
         vector<int> v1;
         vector<int> v2;
         map<char, int>::iterator it, it2;
