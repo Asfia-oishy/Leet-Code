@@ -1,62 +1,48 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int visited[202];
-
-bool dfs(vector<vector<char>>& g, int src) {
-    stack<int> S;
-    bool flag = false;
-
-    S.push(src);
-    visited[src] = 1;
-
-    while (!S.empty()) {
-        int u = S.top();
-        S.pop();
-        for (int i = 0; i < g[0].size(); i++) {
-            if (g[u][i] == '1') {
-                flag =true;
-                if (visited[i] != 1) {
-                    S.push(i);
-                    visited[i] = 1;
+class Solution {
+    void dfs(vector<vector<char>> &matrix,int x,int y,int r,int c)
+    {
+        if(x<0 || x>=r || y<0 || y>=c || matrix[x][y]!='1')  //Boundary case for matrix
+            return;
+        
+        //Mark current cell as visited
+        matrix[x][y] = '0';
+        
+        dfs(matrix,x+1,y,r,c);  //DOWN
+        dfs(matrix,x,y+1,r,c);  //RIGHT
+        dfs(matrix,x-1,y,r,c);  //TOP
+        dfs(matrix,x,y-1,r,c);  //LEFT
+    }
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        
+        int rows = grid.size();
+        if(rows==0)  
+            return 0;
+        int cols = grid[0].size();
+        
+        //Iterate for all cells of the array
+        int cnt = 0;
+        for(int i=0;i<rows;++i)
+        {
+            for(int j=0;j<cols;++j)
+            {
+                if(grid[i][j]=='1')
+                {
+                    dfs(grid,i,j,rows,cols);
+                    cnt += 1;
                 }
             }
         }
-    }
-    return flag;
-}
-
-
-class Solution {
-public:
-    int numIslands(vector<vector<char>>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();        
-        int nodes=max(m,n),cnt=0;
-
-        for (int i = 0; i <nodes;i++)
-            visited[i] = -1;
-        bool visit;
-
-
-        for (int i = 0; i < m; i++) {
-
-            if(visited[i]==-1)
-            {
-                visit = dfs(grid,i);
-                if(visit==true)
-                cnt++;
-            }
-
-        }
-
         return cnt;
     }
 };
 
 int main()
 {
-    vector<vector<char>> grid ={{'1','1','1','1','0'},{'1','1','0','1','0'},{'1','1','0','0','0'},{'0','0','0','0','0'}};
+    vector<vector<char>> grid ={{'1','1','0','0','0'},{'1','1','0','0','0'},{'0','0','1','0','0'},{'0','0','0','1','1'}};
     Solution s;
     cout<<s.numIslands(grid)<<endl;
     return 0;
